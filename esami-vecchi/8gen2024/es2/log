@@ -1,0 +1,24 @@
+---DEBUG---
+money: 10
+libri:
+1 2 3 4 9 
+expected: 
+1 9 
+///DEBUG///
+
+---DEBUG---
+money: 10
+libri:
+1 2 3 4 9 10 
+expected: 
+1 9 
+///DEBUG///
+
+---DEBUG---
+money: 10
+libri:
+2 3 8 9 10 11 
+expected: 
+2 8 
+///DEBUG///
+
