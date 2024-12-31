@@ -1,4 +1,5 @@
 sorting/build/*
+!sorting/build/.gitignore
 
 esercitazioni
 esercitazioni/*
