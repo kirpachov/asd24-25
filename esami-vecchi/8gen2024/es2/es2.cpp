@@ -100,6 +100,8 @@ int max(int n1, int n2){
 
 int find(std::vector<int> const& v, const int n, const int start, const int end) {
   int size = end - start + 1;
+  if (size == 0) return -1;
+
   if (size <= 2){
     if (v.at(start) == n) return start;
     if (v.at(end) == n) return end;
@@ -157,19 +159,23 @@ void sort(std::vector<int> & v){
 int libriSelezionati(std::vector<int> prezzoLibri, double soldi, std::vector<std::pair<int, int>>& res) {
 
   sort(prezzoLibri);
+  std::vector<int> partial_res;
 
-  for(int i = 0; i < 1 + prezzoLibri.size() / 2; i++){
+  for(int i = 0; i < prezzoLibri.size(); i++){
     int n = prezzoLibri[i];
 
-    if (soldi - n > 0 && find(prezzoLibri, soldi - n) != -1) {
-      res.push_back(
-        std::pair<int, int>(
-          min(soldi - n, n),
-          max(soldi - n, n)
-        )
-      );
+    if (soldi - n > 0 && find(prezzoLibri, soldi - n) != -1 && find(partial_res, n) == -1 && find(partial_res, soldi - n) == -1) {
+      partial_res.push_back(n);
     }
   }
+
+  for(auto n: partial_res)
+    res.push_back(
+      std::pair<int, int>(
+        min(soldi - n, n),
+        max(soldi - n, n)
+      )
+    );
 
   return res.size();
 }
