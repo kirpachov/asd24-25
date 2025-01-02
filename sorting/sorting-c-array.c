@@ -48,6 +48,7 @@ void brutto_merge_sort(int* punteggi, int start, int end){
   if (size < 2) return;
   if (size == 2) {
     if (punteggi[start] > punteggi[end]) {
+      printf("scambio %d con %d\n", punteggi[start], punteggi[end]);
       int n = punteggi[end];
       punteggi[end] = punteggi[start];
       punteggi[start] = n;
@@ -60,18 +61,34 @@ void brutto_merge_sort(int* punteggi, int start, int end){
   brutto_merge_sort(punteggi, start, middle);
   brutto_merge_sort(punteggi, middle + 1, end);
   int* trash = malloc(size * sizeof(int));
-  for(int i = 0; i < size; i++)
+  // printf("trash: ");
+  for(int i = 0; i < size; i++){
     trash[i] = punteggi[i + start];
+    // printf("%d ", trash[i]);
+  }
+  // printf("\n");
 
   int left = 0, right = middle + 1, index = start;
-  while(index < end) {
-    if (trash[left] > trash[right]) {
+  while(index <= end) {
+    printf("index=%d, left=%d, right=%d ", index, left, right);
+    // printf("left %d, right: %d. trash[%d]: %d, trash[%d]: %d\n", left, right, left, trash[left], right, trash[right]);
+    if (right < end && trash[right] < trash[left]) {
+      assert(right >= 0);
+      assert(right <= end);
+      printf(" scrivo right %d ", trash[right]);
       punteggi[index++] = trash[right];
       right++;
-    } else {
+    } else if(left < middle + 1) {
+      assert(left >= 0);
+      assert(left <= end);
+      // printf("scrivo %d su %d. left: %d\n", trash[left], index, left);
       punteggi[index++] = trash[left];
+      printf(" scrivo left %d ", trash[left]);
       left++;
+    } else {
+      assert(0);
     }
+    printf("\n");
   }
 }
 
